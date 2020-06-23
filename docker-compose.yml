@@ -9,7 +9,7 @@ services:
       # storage
       - ./storage/db:/var/lib/mysql
     env_file:
-      - db.env
+      - ./config/db.env
 
   redis:
     image: redis:alpine
@@ -25,7 +25,7 @@ services:
       - MYSQL_HOST=db # you don't need to secret this on db.env
       - REDIS_HOST=redis
     env_file:
-      - db.env
+      - ./config/db.env
     depends_on: # wait for this containers to run first
       - db
       - redis
@@ -39,7 +39,7 @@ services:
       # storage
       - ./storage/nextcloud:/var/www/html:ro
     env_file:
-      - web.env
+      - ./config/web.env
       
     depends_on:
       - app
