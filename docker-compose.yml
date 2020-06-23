@@ -126,6 +126,17 @@ services:
       - proxy-tier
       - default
 
+  grafana:
+    image: grafana/grafana
+    networks: 
+      - default
+      - proxy-tier
+    environment: 
+      VIRTUAL_HOST: test-grafana.duckdns.org,www.test-grafana.duckdns.org
+      LETSENCRYPT_HOST: test-grafana.duckdns.org,www.test-grafana.duckdns.org
+      LETSENCRYPT_EMAIL: moracabanas@live.com
+
+
 # volumes:
 #   db:
 #   nextcloud:
