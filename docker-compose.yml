@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -40,11 +40,11 @@ services:
       - ./storage/nextcloud:/var/www/html:ro
     env_file:
       - ./config/web.env
-      
+
     depends_on:
       - app
     networks:
-      - proxy-tier 
+      - proxy-tier
       - default
 
   cron:
@@ -92,6 +92,35 @@ services:
       - proxy-tier # isolate network to communicate only with nginx-proxy container
     depends_on:
       - proxy
+
+  prometheus:
+    image: prom/prometheus:latest
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+    env_file: 
+      - ./config/prometheus.env
+    networks:
+      - proxy-tier
+      - default
+
+  cadvisor:
+    image: gcr.io/google-containers/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - redis
+    env_file: 
+      - ./config/cadvisor.env
+    networks:
+      - proxy-tier
+      - default
 
 # volumes:
 #   db:
