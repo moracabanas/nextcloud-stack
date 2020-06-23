@@ -95,6 +95,8 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
+    expose: 
+      - "9090"
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
@@ -109,6 +111,8 @@ services:
 
   cadvisor:
     image: gcr.io/google-containers/cadvisor:latest
+    expose: 
+      - "8080"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
