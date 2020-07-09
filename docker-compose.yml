@@ -38,6 +38,7 @@ services:
       - ./config/web/nginx.conf:/etc/nginx/nginx.conf:ro
       # storage
       - ./storage/nextcloud:/var/www/html:ro
+      - ./storage/log/nginx/web:/var/log/nginx #log
     env_file:
       - ./config/web.env
       
@@ -73,6 +74,7 @@ services:
       - ./storage/certs:/etc/nginx/certs:ro
       - ./storage/vhost/vhost.d:/etc/nginx/vhost.d
       - ./storage/html:/usr/share/nginx/html
+      - ./storage/log/nginx/proxy:/var/log/nginx #log
       # docker.sock
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
