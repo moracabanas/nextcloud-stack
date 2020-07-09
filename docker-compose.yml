@@ -41,7 +41,6 @@ services:
       - ./storage/log/nginx/web:/var/log/nginx #log
     env_file:
       - ./config/web.env
-      
     depends_on:
       - app
     networks:
